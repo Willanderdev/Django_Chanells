@@ -1,0 +1,43 @@
+{% load django_bootstrap5 %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Geek Chat</title>
+    {% bootstrap_css %}
+</head>
+<body>
+ <div clas="container">
+     Qual sala de chat você gostaria de entrar?<br/>
+        <input id="nome_sala" name="nome_sala" type="text" size="100" placeholder="Nome da sala..."><br/>
+    
+            <input id="botao" class="btn btn-primary" type="button" value="Entrar" />
+  
+ </div>
+ <script>
+
+    // põe fócu no input com id #nome-sala
+     document.querySelector('#nome_sala').focus();
+
+     //se o usuario teclar o nome da sala e apertar enter esta função atribui e evento click ao botãoo #botao 
+     document.querySelector('#nome_sala').onkeyup = function(e){
+         if(e.keyCode === 13){
+             document.querySelector('#botao').click();
+         }
+     };
+
+     //função que recupera o que foi digitado no imput #nome_sala quando o botão #botao é clicado
+     document.querySelector('#botao').onclick = function(e){
+         var nome_sala = document.querySelector('#nome_sala').value;
+         if(nome_sala != ""){
+             window.location.pathname = '/chat/' + nome_sala + '/';
+         }else{
+             alert('Você precisa informar o nome da sala.');
+             document.querySelector('#nome_sala').focus();
+         }
+     };
+
+ </script>
+{% bootstrap_javascript %}
+</body>
+</html>
