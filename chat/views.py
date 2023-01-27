@@ -1,18 +1,18 @@
-from django.views.generic import TemplateView
-from django.utils.safestring import mark_safe
-import json
+from django.shortcuts import render
+
+from .models import Message
+
+def index(request):
+    return render(request, "index.html")
 
 
-class IndexView(TemplateView):
-    template_name = 'index.html'
+def room(request, room_name):
+    username = request.GET.get('username', 'Anonymous')
+    messages = Message.objects.filter(room=room_name)[0:25]
+    context = {
+        'room_name': room_name,
+        'username': username,
+        'messages': messages
+    }
 
-
-class SalaView(TemplateView):
-    template_name = 'sala.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(SalaView, self).get_context_data(**kwargs)
-        context['nome_sala_json'] = mark_safe(
-            json.dumps(self.kwargs['nome_sala'])
-        )
-        return context
+    return render(request, 'room.html', context=context)

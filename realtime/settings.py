@@ -31,8 +31,8 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-
-    'channels',
+    'daphne',
+    
     'chat',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -127,15 +127,15 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Específica do Channels
-ASGI_APPLICATION = 'realtime.routing.application'
+ASGI_APPLICATION = "realtime.asgi.application"
 
 CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            'hosts': [('127.0.0.1', 6379)]
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
         },
     },
-
 }
 
+# import channels; print(dir(channels)) - mostra o que tem dentro do pacote

@@ -1,43 +1,75 @@
-{% load django_bootstrap5 %}
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
-    <title>Geek Chat</title>
-    {% bootstrap_css %}
+    <title>Chat Rooms</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
 </head>
-<body>
- <div clas="container">
-     Qual sala de chat você gostaria de entrar?<br/>
-        <input id="nome_sala" name="nome_sala" type="text" size="100" placeholder="Nome da sala..."><br/>
+
     
-            <input id="botao" class="btn btn-primary" type="button" value="Entrar" />
-  
- </div>
- <script>
+    <body>
+        <section class="section">
+            <div class="container">
+                <div class="columns is-multiline">
+                    <div class="column is-6 is-offset-3 mb-6">
+                        <section class="hero is-dark">
+                            <div class="hero-body">
+                                <p class="title">
+                                    Django Chat
+                                </p>
+                                <p class="subtitle">
+                                    Chat com Django, Channels WebSockets e Redis
+                                </p>
+                            </div>
+                        </section>
+                    </div>
+    
+                    <div class="column is-4 is-offset-4">
+                        <div class="field">
+                            <label>Sala</label>
+    
+                            <div class="control">
+                                <input class="input" type="text" placeholder="Room name" id="room-name-input">
+                            </div>
+                        </div>
+    
+                        <div class="field">
+                            <label>Username</label>
+    
+                            <div class="control">
+                                <input class="input" type="text" placeholder="Username" id="username-input">
+                            </div>
+                        </div>
+    
+                        <div class="field">
+                            <div class="control">
+                                <a class="button is-info" id="room-name-submit">Enviar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    <!-- What chat room would you like to enter?<br>
+    <input id="room-name-input" type="text" size="100"><br>
+    <input id="room-name-submit" type="button" value="Enter"> -->
 
-    // põe fócu no input com id #nome-sala
-     document.querySelector('#nome_sala').focus();
+    <script>
+        document.querySelector('#room-name-input').focus();
+        document.querySelector('#room-name-input').onkeyup = function (e) {
+            if (e.keyCode === 13) {  // enter, return
+                document.querySelector('#room-name-submit').click();
+            }
+        };
 
-     //se o usuario teclar o nome da sala e apertar enter esta função atribui e evento click ao botãoo #botao 
-     document.querySelector('#nome_sala').onkeyup = function(e){
-         if(e.keyCode === 13){
-             document.querySelector('#botao').click();
-         }
-     };
+        document.querySelector('#room-name-submit').onclick = function (e) {
+           var roomName = document.querySelector('#room-name-input').value;
+            var userName = document.querySelector('#username-input').value;
 
-     //função que recupera o que foi digitado no imput #nome_sala quando o botão #botao é clicado
-     document.querySelector('#botao').onclick = function(e){
-         var nome_sala = document.querySelector('#nome_sala').value;
-         if(nome_sala != ""){
-             window.location.pathname = '/chat/' + nome_sala + '/';
-         }else{
-             alert('Você precisa informar o nome da sala.');
-             document.querySelector('#nome_sala').focus();
-         }
-     };
-
- </script>
-{% bootstrap_javascript %}
+            window.location.replace(roomName + '/?username=' + userName);
+        };
+    </script>
 </body>
+
 </html>
